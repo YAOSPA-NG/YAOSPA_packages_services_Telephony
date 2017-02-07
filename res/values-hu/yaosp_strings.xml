@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2012-2015 SlimRoms Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Proximity speaker -->
+    <string name="display_category_prox_auto_speaker_title">Kihangosító beállítások</string>
+    <string name="prox_auto_speaker_title">Automatikus kihangosító mód</string>
+    <string name="prox_auto_speaker_summary">Ha a telefon az arctól eltávolodik, a kihangosító mód automatikusan bekapcsol</string>
+    <string name="prox_auto_speaker_delay_title">Kihangosító mód késleltetés</string>
+    <string name="prox_auto_speaker_delay_summary">Idő, miután a kihangosító mód aktiválódik</string>
+    <string name="prox_auto_speaker_incall_only_title">Csak hívás közben</string>
+    <string name="prox_auto_speaker_incall_only_summary_on">A kimenő hívások esetén a kihangosító mód csak akkor lesz aktív, ha a fogadó fél válaszolt</string>
+    <string name="prox_auto_speaker_incall_only_summary_off">A kihangosító mód az összes bejövő hívásnál aktív (alapértelmezett)</string>
+
+    <!-- Setting title for the flip action setting. -->
+    <string name="flip_action_title">Lefordítási művelet</string>
+
+    <!-- Dialog title of the flip action setting. -->
+    <string name="flip_action_dialog_title">A telefon lefordításakor\u2026</string>
+
+    <!-- Setting summary for the flip action setting. -->
+    <string name="flip_action_summary">A telefon lefordításakor <xliff:g id="action">%s</xliff:g></string>
+
+    <!-- Values for flip action array entries -->
+    <string name="entry_do_nothing">Nem történik semmi</string>
+    <string name="entry_mute_ringer">Csengés elnémítása</string>
+    <string name="entry_dismiss_call">Hívás elutasítása</string>
+    <string name="summary_do_nothing">nem történik semmi</string>
+    <string name="summary_mute_ringer">a csengést elnémítja</string>
+    <string name="summary_dismiss_call">a bejövő hívásokat elutasítja</string>
+
+    <!-- Title for the option managing whether or not to use intrusive incall UI. -->
+    <string name="use_intrusive_call_title">Tolakodó bejövő hívás</string>
+    <string name="use_intrusive_call_summary">Teljes kijelzős értesítés bejövő hívásnál akkor is ha a képernyő nincs lezárva</string>
+
+    <!-- Title for the option managing whether or not to show data connection type when roaming. -->
+    <string name="roaming_dataconnection_title">Adatkapcsolat kijelzése barangoláskor</string>
+    <string name="roaming_dataconnection_summary">Kijelzi az adatkapcsolat típusát (LTE, 3G, H...) az állapotsávon / gyorsbeállítás ikonon ha a barangolás (roaming) és az adatkapcsolat aktív (az "R" helyett)</string>
+
+</resources>
