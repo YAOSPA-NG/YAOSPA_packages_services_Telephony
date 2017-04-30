@@ -26,4 +26,21 @@
     <string name="prox_auto_speaker_incall_only_summary_on">Bei ausgehenden Anrufen wird der Lautsprecher erst eingeschaltet nachdem der andere Teilnehmer abnimmt</string>
     <string name="prox_auto_speaker_incall_only_summary_off">Der Lautsprecher wird immer wärend eines Anrufes eingeschaltet (Standard)</string>
 
+    <!-- Setting title for the flip action setting. -->
+    <string name="flip_action_title">Umdreh-Aktion</string>
+
+    <!-- Dialog title of the flip action setting. -->
+    <string name="flip_action_dialog_title">Gerät umdrehen um\u2026</string>
+
+    <!-- Setting summary for the flip action setting. -->
+    <string name="flip_action_summary">Gerät umdrehen wird <xliff:g id="action">%s</xliff:g></string>
+
+    <!-- Values for flip action array entries -->
+    <string name="entry_do_nothing">Nichts zu tun</string>
+    <string name="entry_mute_ringer">Klingelton stumm zu schalten</string>
+    <string name="entry_dismiss_call">Anruf zu beenden</string>
+    <string name="summary_do_nothing">nichts tun</string>
+    <string name="summary_mute_ringer">den Klingelton stumm schalten</string>
+    <string name="summary_dismiss_call">den Anruf beenden</string>
+
 </resources>
