@@ -29,6 +29,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.os.PowerManager;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.preference.CheckBoxPreference;
@@ -36,6 +37,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
@@ -57,6 +59,7 @@ import com.android.phone.settings.AccountSelectionPreference;
 import com.android.phone.settings.PhoneAccountSettingsFragment;
 import com.android.phone.settings.VoicemailSettingsActivity;
 import com.android.phone.settings.fdn.FdnSetting;
+import com.android.phone.settings.preferences.CustomSeekBarPreference;
 import com.android.services.telephony.sip.SipUtil;
 
 import java.lang.String;
@@ -94,6 +97,11 @@ public class CallFeaturesSetting extends PreferenceActivity
     private static final String VOICEMAIL_SETTING_SCREEN_PREF_KEY = "button_voicemail_category_key";
     private static final String BUTTON_FDN_KEY   = "button_fdn_key";
     private static final String BUTTON_RETRY_KEY       = "button_auto_retry_key";
+
+    private static final String PROX_AUTO_SPEAKER  = "prox_auto_speaker";
+    private static final String PROX_AUTO_SPEAKER_DELAY  = "prox_auto_speaker_delay";
+    private static final String PROX_AUTO_SPEAKER_INCALL_ONLY  = "prox_auto_speaker_incall_only";
+
     private static final String BUTTON_GSM_UMTS_OPTIONS = "button_gsm_more_expand_key";
     private static final String BUTTON_CDMA_OPTIONS = "button_cdma_more_expand_key";
 
@@ -110,6 +118,10 @@ public class CallFeaturesSetting extends PreferenceActivity
     private PreferenceScreen mVoicemailSettingsScreen;
     private CheckBoxPreference mEnableVideoCalling;
 
+    private SwitchPreference mProxSpeaker;
+    private CustomSeekBarPreference mProxSpeakerDelay;
+    private SwitchPreference mProxSpeakerIncallOnly;
+
     /*
      * Click Listeners, handle click based on objects attached to UI.
      */
@@ -122,6 +134,13 @@ public class CallFeaturesSetting extends PreferenceActivity
                     android.provider.Settings.Global.CALL_AUTO_RETRY,
                     mButtonAutoRetry.isChecked() ? 1 : 0);
             return true;
+        } else if (preference == mProxSpeaker) {
+            Settings.System.putInt(getContentResolver(), Settings.System.PROXIMITY_AUTO_SPEAKER,
+                    mProxSpeaker.isChecked() ? 1 : 0);
+        } else if (preference == mProxSpeakerIncallOnly) {
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PROXIMITY_AUTO_SPEAKER_INCALL_ONLY,
+                    mProxSpeakerIncallOnly.isChecked() ? 1 : 0);
         }
         return false;
     }
@@ -165,6 +184,10 @@ public class CallFeaturesSetting extends PreferenceActivity
                         .show();
                 return false;
             }
+        } else if (preference == mProxSpeakerDelay) {
+            int delay = (Integer) objValue;
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PROXIMITY_AUTO_SPEAKER_DELAY, delay);
         }
 
         // Always let the preference setting proceed.
@@ -230,6 +253,15 @@ public class CallFeaturesSetting extends PreferenceActivity
         }
 
         PreferenceScreen prefSet = getPreferenceScreen();
+
+        mProxSpeaker = (SwitchPreference) findPreference(PROX_AUTO_SPEAKER);
+        mProxSpeakerIncallOnly = (SwitchPreference) findPreference(PROX_AUTO_SPEAKER_INCALL_ONLY);
+        mProxSpeakerDelay = (CustomSeekBarPreference) findPreference(PROX_AUTO_SPEAKER_DELAY);
+        if (mProxSpeakerDelay != null) {
+            mProxSpeakerDelay.setValue(100);
+            mProxSpeakerDelay.setOnPreferenceChangeListener(this);
+        }
+
         mVoicemailSettingsScreen =
                 (PreferenceScreen) findPreference(VOICEMAIL_SETTING_SCREEN_PREF_KEY);
         mVoicemailSettingsScreen.setIntent(mSubscriptionInfoHelper.getIntent(
@@ -407,6 +439,38 @@ public class CallFeaturesSetting extends PreferenceActivity
                 }
             }
             wifiCallingSettings.setSummary(resId);
+        }
+
+        final ContentResolver contentResolver = getContentResolver();
+
+        if (mProxSpeaker != null) {
+            PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+            if (pm.isWakeLockLevelSupported(
+                    PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK)
+                    && getResources().getBoolean(R.bool.config_enabled_speakerprox)) {
+                mProxSpeaker.setChecked(Settings.System.getInt(contentResolver,
+                        Settings.System.PROXIMITY_AUTO_SPEAKER, 0) == 1);
+                if (mProxSpeakerIncallOnly != null) {
+                    mProxSpeakerIncallOnly.setChecked(Settings.System.getInt(contentResolver,
+                            Settings.System.PROXIMITY_AUTO_SPEAKER_INCALL_ONLY, 0) == 1);
+                }
+                if (mProxSpeakerDelay != null) {
+                    final int proxDelay = Settings.System.getInt(getContentResolver(),
+                            Settings.System.PROXIMITY_AUTO_SPEAKER_DELAY, 100);
+                    mProxSpeakerDelay.setValue(proxDelay);
+                }
+            } else {
+                prefSet.removePreference(mProxSpeaker);
+                mProxSpeaker = null;
+                if (mProxSpeakerIncallOnly != null) {
+                    prefSet.removePreference(mProxSpeakerIncallOnly);
+                    mProxSpeakerIncallOnly = null;
+                }
+                if (mProxSpeakerDelay != null) {
+                    prefSet.removePreference(mProxSpeakerDelay);
+                    mProxSpeakerDelay = null;
+                }
+            }
         }
     }
 
