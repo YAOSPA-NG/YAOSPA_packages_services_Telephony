@@ -50,6 +50,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
+import android.provider.Settings;
 import android.telephony.CarrierConfigManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.SubscriptionInfo;
@@ -98,6 +99,10 @@ public class MobileNetworkSettings extends PreferenceActivity
     private static final String BUTTON_OPERATOR_SELECTION_EXPAND_KEY = "button_carrier_sel_key";
     private static final String BUTTON_CARRIER_SETTINGS_KEY = "carrier_settings_key";
     private static final String BUTTON_CDMA_SYSTEM_SELECT_KEY = "cdma_system_select_key";
+    private static final String BUTTON_ROAMING_ICON_STYLE_KEY = "roaming_icon_style";
+
+    private static final int ROAMING_ICON_BIG = 0;
+    private static final int ROAMING_ICON_SMALL = 1;
 
     static final int preferredNetworkMode = Phone.PREFERRED_NT_MODE;
 
@@ -113,6 +118,7 @@ public class MobileNetworkSettings extends PreferenceActivity
     private ListPreference mButtonEnabledNetworks;
     private RestrictedSwitchPreference mButtonDataRoam;
     private SwitchPreference mButton4glte;
+    private SwitchPreference mRoamingIconStyle;
     private Preference mLteDataServicePref;
 
     private static final String iface = "rmnet0"; //TODO: this will go away
@@ -245,6 +251,9 @@ public class MobileNetworkSettings extends PreferenceActivity
             return true;
         } else if (preference == mButtonDataRoam) {
             // Do not disable the preference screen if the user clicks Data roaming.
+            return true;
+        } else if (preference == mRoamingIconStyle) {
+            // Do not disable the preference screen if the user clicks Data roaming.icon style
             return true;
         } else {
             // if the button is anything but the simple toggle preference,
@@ -452,11 +461,14 @@ public class MobileNetworkSettings extends PreferenceActivity
         PreferenceScreen prefSet = getPreferenceScreen();
 
         mButtonDataRoam = (RestrictedSwitchPreference) prefSet.findPreference(BUTTON_ROAMING_KEY);
+        mRoamingIconStyle = (SwitchPreference) prefSet.findPreference(
+                BUTTON_ROAMING_ICON_STYLE_KEY);
         mButtonPreferredNetworkMode = (ListPreference) prefSet.findPreference(
                 BUTTON_PREFERED_NETWORK_MODE);
         mButtonEnabledNetworks = (ListPreference) prefSet.findPreference(
                 BUTTON_ENABLED_NETWORKS_KEY);
         mButtonDataRoam.setOnPreferenceChangeListener(this);
+        mRoamingIconStyle.setOnPreferenceChangeListener(this);
 
         mLteDataServicePref = prefSet.findPreference(BUTTON_CDMA_LTE_DATA_SERVICE_KEY);
 
@@ -536,6 +548,7 @@ public class MobileNetworkSettings extends PreferenceActivity
         if (prefSet != null) {
             prefSet.removeAll();
             prefSet.addPreference(mButtonDataRoam);
+            prefSet.addPreference(mRoamingIconStyle);
             prefSet.addPreference(mButtonPreferredNetworkMode);
             prefSet.addPreference(mButtonEnabledNetworks);
             prefSet.addPreference(mButton4glte);
@@ -721,6 +734,10 @@ public class MobileNetworkSettings extends PreferenceActivity
 
         // Get the networkMode from Settings.System and displays it
         mButtonDataRoam.setChecked(mPhone.getDataRoamingEnabled());
+        mRoamingIconStyle.setChecked(
+                Settings.Secure.getIntForUser(mPhone.getContext().getContentResolver(),
+                        Settings.Secure.ROAMING_ICON_STYLE, 0,
+                        UserHandle.USER_CURRENT) == 1);
         mButtonEnabledNetworks.setValue(Integer.toString(settingsNetworkMode));
         mButtonPreferredNetworkMode.setValue(Integer.toString(settingsNetworkMode));
         UpdatePreferredNetworkModeSummary(settingsNetworkMode);
@@ -751,6 +768,7 @@ public class MobileNetworkSettings extends PreferenceActivity
                 R.string.enhanced_4g_lte_mode_title;
         mButtonDataRoam.setDisabledByAdmin(false);
         mButtonDataRoam.setEnabled(hasActiveSubscriptions);
+        mRoamingIconStyle.setEnabled(hasActiveSubscriptions);
         if (mButtonDataRoam.isEnabled()) {
             if (RestrictedLockUtils.hasBaseUserRestriction(context,
                     UserManager.DISALLOW_DATA_ROAMING, UserHandle.myUserId())) {
@@ -936,6 +954,11 @@ public class MobileNetworkSettings extends PreferenceActivity
             } else {
                 mPhone.setDataRoamingEnabled(false);
             }
+            return true;
+        } else if (preference == mRoamingIconStyle) {
+            Settings.Secure.putIntForUser(mPhone.getContext().getContentResolver(),
+                    Settings.Secure.ROAMING_ICON_STYLE,
+                    mRoamingIconStyle.isChecked() ? 0 : 1, UserHandle.USER_CURRENT);
             return true;
         }
 

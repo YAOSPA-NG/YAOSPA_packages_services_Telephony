@@ -28,6 +28,15 @@
         android:summaryOn="@string/roaming_enable"
         android:summaryOff="@string/roaming_disable"/>
 
+    <SwitchPreference
+        android:key="roaming_icon_style"
+        android:title="@string/roaming_icon_style_title"
+        android:persistent="false"
+        android:defaultValue="false"
+        android:summaryOn="@string/roaming_icon_style_summary_on"
+        android:summaryOff="@string/roaming_icon_style_summary_off"/>
+
+
     <ListPreference
         android:key="preferred_network_mode_key"
         android:title="@string/preferred_network_mode_title"

@@ -43,4 +43,9 @@
     <string name="summary_mute_ringer">den Klingelton stumm schalten</string>
     <string name="summary_dismiss_call">den Anruf beenden</string>
 
+    <!-- Roaming Icon Style -->
+    <string name="roaming_icon_style_title">Kleine Roaming-Anzeige in der Statusleiste</string>
+    <string name="roaming_icon_style_summary_on">Kleiner "R" Prefix links vom Signal-Icon in der Statusleiste anzeigen</string>
+    <string name="roaming_icon_style_summary_off">Großes "R" Icon rechts vom Signal-Icon in der Statusleiste anzeigen (default)</string>
+
 </resources>

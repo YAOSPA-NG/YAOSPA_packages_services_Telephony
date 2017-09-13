@@ -43,4 +43,9 @@
     <string name="summary_mute_ringer">arrêtera la sonnerie</string>
     <string name="summary_dismiss_call">refuserera l\'appel</string>
 
+    <!-- Roaming Icon Style -->
+    <string name="roaming_icon_style_title">Utiliser un petit indicateur d\'itinérance dans la barre d\'état</string>
+    <string name="roaming_icon_style_summary_on">Afficher un petit préfix "R" à gauche de l\'icône de signal dans la barre d\'état</string>
+    <string name="roaming_icon_style_summary_off">Afficher une grande icône "R" à droite de l\'icône de signal dans la barre d\'état (défaut)</string>
+
 </resources>
