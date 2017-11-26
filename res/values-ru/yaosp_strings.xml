@@ -51,4 +51,12 @@
     <string name="roaming_icon_style_summary_on">Показывать маленький значок "R" слева от индикатора сигнала сети в строке состояния</string>
     <string name="roaming_icon_style_summary_off">Показывать большой значок "R" справа от индикатора сигнала сети в строке состояния (по умолчанию)</string>
 
+    <!-- Missing CAF translations -->
+    <string name="preferred_duration_title">Длительность звонка</string>
+    <string name="duration_enable_summary">Показ длительности звонка ВКЛЮЧЕН</string>
+    <string name="duration_disable_summary">Показ длительности звонка ВЫКЛЮЧЕН</string>
+    <string name="proximity_mode_title">Включить датчик приближения</string>
+    <string name="proximity_on_summary">При ответе на звонок экран будет выключен для сохранения заряда батареи.</string>
+    <string name="proximity_off_summary">При ответе на звонок экран будет всегда включен.</string>
+
 </resources>
