@@ -48,4 +48,12 @@
     <string name="roaming_icon_style_summary_on">Kleiner "R" Prefix links vom Signal-Icon in der Statusleiste anzeigen</string>
     <string name="roaming_icon_style_summary_off">Großes "R" Icon rechts vom Signal-Icon in der Statusleiste anzeigen (default)</string>
 
+    <!-- Missing CAF translations -->
+    <string name="preferred_duration_title">Dauer anzeigen</string>
+    <string name="duration_enable_summary">Dauer anzeigen ist AN</string>
+    <string name="duration_disable_summary">Dauer anzeigen ist AUS</string>
+    <string name="proximity_mode_title">Annäherungssensor aktivieren</string>
+    <string name="proximity_on_summary">Bildschirm wird wärend eines Anrufes ausgeschaltet um Strom zu sparen</string>
+    <string name="proximity_off_summary">Bildschirm wird wärend eines Anrufes immer eingeschaltet bleiben</string>
+
 </resources>

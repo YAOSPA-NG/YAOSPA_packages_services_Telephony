@@ -48,4 +48,12 @@
     <string name="roaming_icon_style_summary_on">Afficher un petit préfix "R" à gauche de l\'icône de signal dans la barre d\'état</string>
     <string name="roaming_icon_style_summary_off">Afficher une grande icône "R" à droite de l\'icône de signal dans la barre d\'état (défaut)</string>
 
+    <!-- Missing CAF translations -->
+    <string name="preferred_duration_title">Afficher durée</string>
+    <string name="duration_enable_summary">Afficher durée est actif</string>
+    <string name="duration_disable_summary">Dauer anzeigen est inactif</string>
+    <string name="proximity_mode_title">Activer le détecteur de proximité</string>
+    <string name="proximity_on_summary">L\'écran sera coupé lors d\'un appel afin d\'économiser du courant</string>
+    <string name="proximity_off_summary">L\'écran restera toujours allumé lors d\'un appel</string>
+
 </resources>
